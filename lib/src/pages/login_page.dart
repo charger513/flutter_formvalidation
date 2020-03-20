@@ -52,7 +52,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: 30.0),
                 _crearPassword(bloc),
                 SizedBox(height: 30.0),
-                _crearBoton()
+                _crearBoton(bloc)
               ],
             )
           ),
@@ -65,19 +65,26 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _crearBoton() {
-    return RaisedButton(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-        child: Text('Ingresar'),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5.0)
-      ),
-      elevation: 0.0,
-      color: Colors.deepPurple,
-      textColor: Colors.white,
-      onPressed: () {},
+  Widget _crearBoton(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.formValidStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        return Container(
+          child: RaisedButton(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+              child: Text('Ingresar'),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0)
+            ),
+            elevation: 0.0,
+            color: Colors.deepPurple,
+            textColor: Colors.white,
+            onPressed: snapshot.hasData ? () {} : null,
+          ),
+        );
+      },
     );
   }
 
@@ -152,12 +159,13 @@ class LoginPage extends StatelessWidget {
     return Stack(
       children: <Widget>[
         fondoMorado,
+
         Positioned( top: 90.0, left: 30.0, child: circulo ),
         Positioned( top: -40.0, right: -30.0, child: circulo ),
         // Positioned( top: 90.0, left: 50.0, child: circulo ),
-        // Positioned( bottom: -50.0, right: -10.0, child: circulo ),
-        // Positioned( bottom: 120.0, right: 20.0, child: circulo ),
-        // Positioned( bottom: -50.0, left: -20.0, child: circulo ),
+        Positioned( bottom: -50.0, right: -10.0, child: circulo ),
+        Positioned( bottom: 120.0, right: 20.0, child: circulo ),
+        Positioned( bottom: -50.0, left: -20.0, child: circulo ),
 
         Container(
           padding: EdgeInsets.only(top: 80.0),
